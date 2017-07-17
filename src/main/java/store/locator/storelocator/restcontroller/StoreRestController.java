@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import store.locator.storelocator.exception.StoreException;
 import store.locator.storelocator.exception.StoreNotFoundException;
-import store.locator.storelocator.helper.LWStore;
 import store.locator.storelocator.helper.ResponseObject;
+import store.locator.storelocator.helper.StoreInfo;
 import store.locator.storelocator.service.StoreService;
 
 @RestController
 public class StoreRestController {
-	@Autowired       //autowire by type to store service
+	@Autowired
 	StoreService storeService;
 
 	@RequestMapping(value = "/store", method = RequestMethod.POST, consumes = "application/json")
-	ResponseObject<String> createStore(@RequestBody LWStore lwStore) {
+	ResponseObject<String> createStore(@RequestBody StoreInfo lwStore) {
 		ResponseObject<String> res = new ResponseObject<String>();
 
 		try {
@@ -55,11 +55,11 @@ public class StoreRestController {
 	}
 
 	@RequestMapping(value = "/store", method = RequestMethod.PUT, consumes = "application/json")
-	ResponseObject<LWStore> updateSotre(@RequestBody LWStore lwStore) {
-		ResponseObject<LWStore> res = new ResponseObject<LWStore>();
+	ResponseObject<StoreInfo> updateSotre(@RequestBody StoreInfo lwStore) {
+		ResponseObject<StoreInfo> res = new ResponseObject<StoreInfo>();
 
 		try {
-			LWStore lwStoreUpdated = storeService.updateStore(lwStore);
+			StoreInfo lwStoreUpdated = storeService.updateStore(lwStore);
 
 			res.setCode(1);
 			res.setDescription("Success");
@@ -92,7 +92,7 @@ public class StoreRestController {
 	}
 
 	@RequestMapping(value = "/store", method = RequestMethod.DELETE, consumes = "application/json")
-	ResponseObject<String> deleteStore(@RequestBody LWStore lwStore) {
+	ResponseObject<String> deleteStore(@RequestBody StoreInfo lwStore) {
 		ResponseObject<String> res = new ResponseObject<String>();
 
 		String storeUID = lwStore.getStoreUID();
@@ -123,16 +123,16 @@ public class StoreRestController {
 	}
 
 	@RequestMapping(value = "/store/locate/{zipcode}", method = RequestMethod.GET, consumes = "application/json")
-	ResponseObject<List<LWStore>> locateStore(
+	ResponseObject<List<StoreInfo>> locateStore(
 			@PathVariable("zipcode") Integer zipcode,
 			@RequestParam Map<String, String> map) {
 
 		Double radius = Double.parseDouble(map.get("radius"));
 
-		ResponseObject<List<LWStore>> res = new ResponseObject<List<LWStore>>();
+		ResponseObject<List<StoreInfo>> res = new ResponseObject<List<StoreInfo>>();
 
 		try {
-			List<LWStore> stores = storeService.getStoreList(zipcode, radius);
+			List<StoreInfo> stores = storeService.getStoreList(zipcode, radius);
 
 			res.setCode(1);
 			res.setDescription("Success");

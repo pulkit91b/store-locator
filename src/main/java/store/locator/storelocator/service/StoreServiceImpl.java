@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 
 import store.locator.storelocator.exception.StoreException;
 import store.locator.storelocator.exception.StoreNotFoundException;
-import store.locator.storelocator.helper.LWStore;
+import store.locator.storelocator.helper.StoreInfo;
 import store.locator.storelocator.helper.StoreComparator;
 import store.locator.storelocator.helper.StoreHelper;
 import store.locator.storelocator.model.Store;
@@ -31,7 +31,7 @@ public class StoreServiceImpl implements StoreService {
 	ZipMasterRepository zipMasterRepo;
 
 	@Override
-	public String createStore(LWStore lwStore) throws StoreException {
+	public String createStore(StoreInfo lwStore) throws StoreException {
 		// TODO Auto-generated method stub
 
 		validateStore(lwStore);
@@ -50,7 +50,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public LWStore updateStore(LWStore lwStore) throws StoreException {
+	public StoreInfo updateStore(StoreInfo lwStore) throws StoreException {
 		// TODO Auto-generated method stub
 
 		validateStore(lwStore);
@@ -81,11 +81,11 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public List<LWStore> getStoreList(Integer zipcode, Double radius)
+	public List<StoreInfo> getStoreList(Integer zipcode, Double radius)
 			throws StoreException {
 		// TODO Auto-generated method stub
 
-		List<LWStore> lwStores = new ArrayList<LWStore>();
+		List<StoreInfo> lwStores = new ArrayList<StoreInfo>();
 
 		ZipMaster zipMaster = zipMasterRepo.getOne(zipcode);
 
@@ -102,7 +102,7 @@ public class StoreServiceImpl implements StoreService {
 			// to check whether store exists within radius
 			if (distance < radius) {
 
-				LWStore lwStore = new LWStore();
+				StoreInfo lwStore = new StoreInfo();
 				BeanUtils.copyProperties(store, lwStore, "storeId");
 				lwStore.setDistance(distance);
 
@@ -122,7 +122,7 @@ public class StoreServiceImpl implements StoreService {
 	 * @param lwStore
 	 * @throws StoreException
 	 */
-	private void validateStore(LWStore lwStore) throws StoreException {
+	private void validateStore(StoreInfo lwStore) throws StoreException {
 		// TODO Auto-generated method stub
 
 		// null check for storeUID

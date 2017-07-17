@@ -1,6 +1,6 @@
 package store.locator.storelocator.helper;
 
-public class LWStore {
+public class StoreInfo {
 
 	private String storeUID;
 
