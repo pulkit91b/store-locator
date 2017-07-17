@@ -21,7 +21,7 @@ import store.locator.storelocator.service.StoreService;
 
 @RestController
 public class StoreRestController {
-	@Autowired
+	@Autowired       //autowire by type to store service
 	StoreService storeService;
 
 	@RequestMapping(value = "/store", method = RequestMethod.POST, consumes = "application/json")
